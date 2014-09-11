@@ -21,6 +21,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+http_not_up/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
