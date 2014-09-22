@@ -3,7 +3,7 @@
 import sys, os, re
 import urllib, urllib2, cookielib, json
 from lxml import etree
-
+from lxml.html import fromstring
 
 
 
@@ -18,6 +18,35 @@ class http_hack:
     self.Client_IP = ''
     self.X_Forwarded_For = ''
     self.X_Requested_With = ''
+
+  class http_code:
+    def __init__(self):
+      self.url = ''
+      self.tag = ''
+      self.tagRule = ''
+      self.page = ''
+
+    def get_html(self, hd):
+      h = urllib2.HTTPHandler()
+      urlOpener = urllib2.build_opener(h)
+      headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
+     
+      req = urllib2.Request(self.url, headers = headers)
+      #soup = urllib2.urlopen(req).read()
+      soup = urlOpener.open(req).read()
+    
+      return soup
+
+    def linksearch(self, headers = {}):
+      
+      #headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
+      #print headers
+      req = urllib2.Request(self.url, headers = headers)
+      page = urllib2.urlopen(req).read()
+      
+
+      doc = fromstring(page)
+      return doc
     
 def add_handler(self):
   hd = []
@@ -28,21 +57,6 @@ def add_handler(self):
       hd.append(h)
 
   return hd
-    #handler = urllib2.HTTPHandler()
-    #urlOpener = urllib2.build_opener(handler)
-"""    
-def get_http(hd, url=''):
-  print hd.X_Forwarded_For
-  print hd 
-"""
 
 
-
-
-if __name__ == '__main__':
-  x = http_hack()
-  
-
-  x.X_Forwarded_For = ('X_Forwarded_For', '1233322')
-  print add_handler(x)
 
